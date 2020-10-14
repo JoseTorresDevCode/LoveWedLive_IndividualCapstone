@@ -11,10 +11,10 @@ namespace LoveWedLive_Capstone.Models
     public class VendorQuote 
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Vendor")]
-        public string VendorId { get; set; }
+        public int VendorId { get; set; }
         public Vendor Vendor { get; set; }
 
     }
