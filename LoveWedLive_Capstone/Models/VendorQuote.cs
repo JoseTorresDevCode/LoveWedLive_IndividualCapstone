@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LoveWedLive_Capstone.Models
 {
-    public class VendorQuotes
+    public class VendorQuote 
     {
         [Key]
         public string Id { get; set; }

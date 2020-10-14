@@ -16,7 +16,7 @@ namespace LoveWedLive_Capstone.Models
 
         [ForeignKey("Address")]
         public int AddressId { get; set; }
-        public Address Adress { get; set; }
+        public Address Address { get; set; }
 
         [ForeignKey("Area")]
         public int AreaId { get; set; }
