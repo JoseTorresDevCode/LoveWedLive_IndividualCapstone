@@ -11,10 +11,10 @@ namespace LoveWedLive_Capstone.Models
     {
         [Key]
         public int Id { get; set; }
-        string StreetName { get; set; }
-        string City { get; set; }
-        string State { get; set; }
-        int Zipcode { get; set; }
+        public string StreetName { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int Zipcode { get; set; }
 
     }
 }

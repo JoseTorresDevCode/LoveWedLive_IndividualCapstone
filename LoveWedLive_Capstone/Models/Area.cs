@@ -9,7 +9,7 @@ namespace LoveWedLive_Capstone.Models
     public class Area
     {
         [Key]
-        int Id { get; set; }
-        string AreaName { get; set; }
+        public int Id { get; set; }
+        public string AreaName { get; set; }
     }
 }

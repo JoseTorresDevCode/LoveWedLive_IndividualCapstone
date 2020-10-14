@@ -9,7 +9,7 @@ namespace LoveWedLive_Capstone.Models
     public class Admin
     {
         [Key]
-        int Id { get; set; }
-        string AdminName { get; set; }
+        public int Id { get; set; }
+        public string AdminName { get; set; }
     }
 }
