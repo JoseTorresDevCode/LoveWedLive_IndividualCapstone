@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,5 +10,16 @@ namespace LoveWedLive_Capstone.Models
 {
     public class Customer
     {
+        [Key]
+        int Id { get; set; }
+        public string WeddingDate { get; set; }
+
+        [ForeignKey("Address")]
+        public int AddressId { get; set; }
+        public Address Adress { get; set; }
+
+        [ForeignKey("Area")]
+        public int AreaId { get; set; }
+        public Area Area { get; set; }
     }
 }
