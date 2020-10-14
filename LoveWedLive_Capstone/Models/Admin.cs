@@ -7,5 +7,7 @@ namespace LoveWedLive_Capstone.Models
 {
     public class Admin
     {
+        int AdminId;
+        string AdminName;
     }
 }

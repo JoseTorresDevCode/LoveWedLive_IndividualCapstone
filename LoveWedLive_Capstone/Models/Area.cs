@@ -7,5 +7,7 @@ namespace LoveWedLive_Capstone.Models
 {
     public class Area
     {
+        int AreaId;
+        string AreaName;
     }
 }
