@@ -2,86 +2,159 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using LoveWedLive_Capstone.Data;
+using LoveWedLive_Capstone.Models;
 
 namespace LoveWedLive_Capstone.Controllers
 {
     public class AdminsController : Controller
     {
-        // GET: AdminsController
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public AdminsController(ApplicationDbContext context)
         {
+            _context = context;
+        }
+
+        // GET: Admins
+        public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = _context.Admins.Include(a => a.IdentityUser);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: Admins/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admin = await _context.Admins
+                .Include(a => a.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
+        }
+
+        // GET: Admins/Create
+        public IActionResult Create()
+        {
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // GET: AdminsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AdminsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AdminsController/Create
+        // POST: Admins/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id,AdminName,IdentityUserId")] Admin admin)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Add(admin);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
+            return View(admin);
         }
 
-        // GET: AdminsController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Admins/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admin = await _context.Admins.FindAsync(id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
+            return View(admin);
         }
 
-        // POST: AdminsController/Edit/5
+        // POST: Admins/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AdminName,IdentityUserId")] Admin admin)
         {
-            try
+            if (id != admin.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(admin);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AdminExists(admin.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
+            return View(admin);
         }
 
-        // GET: AdminsController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Admins/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admin = await _context.Admins
+                .Include(a => a.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
         }
 
-        // POST: AdminsController/Delete/5
-        [HttpPost]
+        // POST: Admins/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var admin = await _context.Admins.FindAsync(id);
+            _context.Admins.Remove(admin);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool AdminExists(int id)
+        {
+            return _context.Admins.Any(e => e.Id == id);
         }
     }
 }
