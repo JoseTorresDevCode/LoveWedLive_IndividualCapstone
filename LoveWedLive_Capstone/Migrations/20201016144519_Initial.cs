@@ -309,17 +309,17 @@ namespace LoveWedLive_Capstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9b9524bf-7524-4c5e-94fa-3cb21bcb42da", "2b8fe43f-b977-42fa-88ef-958517ab569d", "Admin", "ADMIN" });
+                values: new object[] { "f095829c-20fe-4ec2-8324-954bb8ef2f9d", "ca0eca64-2ead-476f-80ca-38ebd938cf59", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b57a0232-29c2-40e1-a8a8-88c80f85beda", "9518cf74-3cf2-4278-807f-d007a4ceaab8", "Customer", "CUSTOMER" });
+                values: new object[] { "50de98ca-aacd-494c-bc9a-2e4d78f1c418", "da0bab12-f4ff-421f-a14e-0893e8cd9797", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "358cfef4-eace-49f9-bb91-2eb988d33852", "e2fbcb64-a111-4dfe-b6d1-1368b613df40", "Vendor", "VENDOR" });
+                values: new object[] { "08b28076-d307-4ca0-9cb0-71c31acc953f", "81f1709c-8b64-480a-8377-f7b65b4741ba", "Vendor", "VENDOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",

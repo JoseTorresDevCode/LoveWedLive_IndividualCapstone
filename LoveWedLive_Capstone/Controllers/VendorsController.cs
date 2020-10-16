@@ -20,10 +20,18 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Vendors
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Vendors.Include(v => v.Address).Include(v => v.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+
+            var vendor = from s in _context.Vendors
+                          select s;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                vendor = vendor.Where(v => v.Address.City.Contains(searchString));
+
+            }
+            return View(vendor);
         }
 
         // GET: Vendors/Details/5
