@@ -13,6 +13,8 @@ namespace LoveWedLive_Capstone.Models
     {
         [Key]
         public int Id { get; set; }
+        public int PriceQuoted { get; set; }
+        public int HoursRequested { get; set; }
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }

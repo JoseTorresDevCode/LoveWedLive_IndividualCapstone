@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoveWedLive_Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201014153605_Initial")]
+    [Migration("20201016134002_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -55,7 +55,12 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<string>("AdminName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Admins");
                 });
@@ -88,6 +93,9 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("WeddingDate")
                         .HasColumnType("nvarchar(max)");
 
@@ -96,6 +104,8 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("AreaId");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Customers");
                 });
@@ -108,6 +118,12 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HoursRequested")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriceQuoted")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -130,6 +146,9 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("SubscriptionType")
                         .HasColumnType("nvarchar(max)");
 
@@ -140,6 +159,8 @@ namespace LoveWedLive_Capstone.Migrations
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("IdentityUserId");
+
                     b.ToTable("Vendors");
                 });
 
@@ -149,6 +170,12 @@ namespace LoveWedLive_Capstone.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PriceQuote")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuotedHours")
+                        .HasColumnType("int");
 
                     b.Property<int>("VendorId")
                         .HasColumnType("int");
@@ -185,6 +212,29 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9b9524bf-7524-4c5e-94fa-3cb21bcb42da",
+                            ConcurrencyStamp = "2b8fe43f-b977-42fa-88ef-958517ab569d",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "b57a0232-29c2-40e1-a8a8-88c80f85beda",
+                            ConcurrencyStamp = "9518cf74-3cf2-4278-807f-d007a4ceaab8",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "358cfef4-eace-49f9-bb91-2eb988d33852",
+                            ConcurrencyStamp = "e2fbcb64-a111-4dfe-b6d1-1368b613df40",
+                            Name = "Vendor",
+                            NormalizedName = "VENDOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -303,12 +353,10 @@ namespace LoveWedLive_Capstone.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -345,12 +393,10 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
-                        .HasMaxLength(128);
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -358,6 +404,13 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("LoveWedLive_Capstone.Models.Admin", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
                 });
 
             modelBuilder.Entity("LoveWedLive_Capstone.Models.Customer", b =>
@@ -373,6 +426,10 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
                 });
 
             modelBuilder.Entity("LoveWedLive_Capstone.Models.QuoteRequest", b =>
@@ -391,6 +448,10 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
                 });
 
             modelBuilder.Entity("LoveWedLive_Capstone.Models.VendorQuote", b =>
