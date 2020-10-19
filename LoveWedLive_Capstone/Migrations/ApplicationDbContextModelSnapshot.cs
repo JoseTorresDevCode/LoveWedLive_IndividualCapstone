@@ -91,8 +91,14 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WeddingDate")
                         .HasColumnType("nvarchar(max)");
@@ -146,6 +152,12 @@ namespace LoveWedLive_Capstone.Migrations
 
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Lat")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Long")
+                        .HasColumnType("float");
 
                     b.Property<string>("SubscriptionType")
                         .HasColumnType("nvarchar(max)");
@@ -214,22 +226,22 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f095829c-20fe-4ec2-8324-954bb8ef2f9d",
-                            ConcurrencyStamp = "ca0eca64-2ead-476f-80ca-38ebd938cf59",
+                            Id = "cc220a0b-f461-4982-8657-87859f92434f",
+                            ConcurrencyStamp = "8eb56d22-55d2-42f7-8142-a08030895f9f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "50de98ca-aacd-494c-bc9a-2e4d78f1c418",
-                            ConcurrencyStamp = "da0bab12-f4ff-421f-a14e-0893e8cd9797",
+                            Id = "48b85d20-1a8e-4946-8d1c-8b3d4422f9da",
+                            ConcurrencyStamp = "37a23992-2962-4aab-8e52-61308b38c558",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "08b28076-d307-4ca0-9cb0-71c31acc953f",
-                            ConcurrencyStamp = "81f1709c-8b64-480a-8377-f7b65b4741ba",
+                            Id = "46b1d066-ba94-4863-a46b-c99d79f0006d",
+                            ConcurrencyStamp = "cbc84ca0-3a56-48a1-bf45-28c39cb813c6",
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using LoveWedLive_Capstone.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using LoveWedLive_Capstone.Models;
+
 
 namespace LoveWedLive_Capstone.Data
 {
@@ -42,6 +45,8 @@ namespace LoveWedLive_Capstone.Data
                 NormalizedName = "VENDOR"
             }
             );
+
+           
         }
     }
 }

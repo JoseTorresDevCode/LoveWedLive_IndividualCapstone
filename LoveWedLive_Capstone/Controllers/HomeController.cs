@@ -17,8 +17,8 @@ namespace LoveWedLive_Capstone.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+       
+            public IActionResult Index()
         {
             return View();
         }

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LoveWedLive_Capstone.Data;
 using LoveWedLive_Capstone.Models;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using System.Security.Claims;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -57,8 +60,8 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: Vendors/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
+            //ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -69,14 +72,26 @@ namespace LoveWedLive_Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CompanyName,VendorType,SubscriptionType,AddressId,IdentityUserId")] Vendor vendor)
         {
+            string url = $"https://maps.googleapis.com/maps/api/geocode/json?address={vendor.Address.StreetName},+{vendor.Address.City},+{vendor.Address.State},{vendor.Address.Zipcode}&key={APIKeys.GeocodeKey}";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+            string jsonResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                JObject geoCode = JObject.Parse(jsonResult);
+                vendor.Lat = (double)geoCode["results"][0]["geometry"]["location"]["lat"];
+                vendor.Long = (double)geoCode["results"][0]["geometry"]["location"]["lng"];
+            }
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                vendor.IdentityUserId = userId;
+                
                 _context.Add(vendor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", vendor.AddressId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", vendor.IdentityUserId);
+
             return View(vendor);
         }
 

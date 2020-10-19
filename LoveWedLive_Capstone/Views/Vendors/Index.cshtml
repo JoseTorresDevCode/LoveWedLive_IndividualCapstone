@@ -31,15 +31,6 @@
         </tr>
     </thead>
     <tbody>
-        <form asp-controller="Vendors" asp-action="Index">
-            <p>
-                Vendor Search: <input type="text" name="SearchString">
-                <input type="submit" value="Filter" />
-            </p>
-        </form>
-
-    </tbody>
-    <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -67,3 +58,8 @@
         }
     </tbody>
 </table>
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/place?zoom=16&q=@Model.Lat,@Model.Long&key=@LoveWedLive_Capstone.APIKeys.GoogleMapsKey"></iframe>
+
+</div>
+

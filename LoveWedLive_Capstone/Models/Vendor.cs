@@ -16,10 +16,13 @@ namespace LoveWedLive_Capstone.Models
         public string CompanyName { get; set; }
         public string VendorType { get; set; }
         public string SubscriptionType { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
 
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public Address Address { get; set; }
+
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

@@ -13,6 +13,9 @@ namespace LoveWedLive_Capstone.Models
     {
         [Key]
         public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         public string WeddingDate { get; set; }
 
         [ForeignKey("Address")]
