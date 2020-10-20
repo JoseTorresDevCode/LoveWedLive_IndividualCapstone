@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoveWedLive_Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201019180039_Initial")]
+    [Migration("20201019220652_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,11 +126,41 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DateAndTimeOfRequest")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DayOfWedding")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("HoursRequested")
                         .HasColumnType("int");
 
-                    b.Property<int>("PriceQuoted")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsRequestingDJ")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequestingOfficiant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequestingPhotoBooth")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequestingPhotographer")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRequestngWeddingStylist")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("VenueCity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VenueState")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VenueStreetName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VenueZip")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -228,22 +258,22 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cc220a0b-f461-4982-8657-87859f92434f",
-                            ConcurrencyStamp = "8eb56d22-55d2-42f7-8142-a08030895f9f",
+                            Id = "9077c590-9bdc-4a52-88fb-ebe21235fad6",
+                            ConcurrencyStamp = "77e7c96b-37f5-49d3-8df1-b014ba37a1f5",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "48b85d20-1a8e-4946-8d1c-8b3d4422f9da",
-                            ConcurrencyStamp = "37a23992-2962-4aab-8e52-61308b38c558",
+                            Id = "ba68f5b6-6c0e-4631-992a-e4949cbf52cc",
+                            ConcurrencyStamp = "a3973309-ceda-4ab4-835e-d014ce676b56",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "46b1d066-ba94-4863-a46b-c99d79f0006d",
-                            ConcurrencyStamp = "cbc84ca0-3a56-48a1-bf45-28c39cb813c6",
+                            Id = "c637c8e2-79c6-42da-861d-4c67f82ea97a",
+                            ConcurrencyStamp = "c8e0da65-c824-4eeb-8b01-ef38938357cf",
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });

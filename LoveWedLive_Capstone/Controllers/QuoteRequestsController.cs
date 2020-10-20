@@ -10,23 +10,23 @@ using LoveWedLive_Capstone.Models;
 
 namespace LoveWedLive_Capstone.Controllers
 {
-    public class CustomersController : Controller
+    public class QuoteRequestsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CustomersController(ApplicationDbContext context)
+        public QuoteRequestsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: QuoteRequests
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.Area).Include(c => c.IdentityUser);
+            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: QuoteRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,47 +34,42 @@ namespace LoveWedLive_Capstone.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .Include(c => c.Address)
-                .Include(c => c.Area)
-                .Include(c => c.IdentityUser)
+            var quoteRequest = await _context.QuoteRequests
+                .Include(q => q.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (quoteRequest == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(quoteRequest);
         }
-        
+
+        // GET: QuoteRequests/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id");
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: QuoteRequests/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,WeddingDate,AddressId,AreaId,IdentityUserId")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,HoursRequested,DayOfWedding,DateAndTimeOfRequest,VenueStreetName,VenueCity,VenueState,VenueZip,IsRequestingPhotographer,IsRequestingPhotoBooth,IsRequestingDJ,IsRequestingOfficiant,IsRequestngWeddingStylist,CustomerId")] QuoteRequest quoteRequest)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(quoteRequest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id", customer.AreaId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View(customer);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
+            return View(quoteRequest);
         }
 
-        // GET: Customers/Edit/5
+        // GET: QuoteRequests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,25 +77,23 @@ namespace LoveWedLive_Capstone.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            var quoteRequest = await _context.QuoteRequests.FindAsync(id);
+            if (quoteRequest == null)
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id", customer.AreaId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View(customer);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
+            return View(quoteRequest);
         }
 
-        // POST: Customers/Edit/5
+        // POST: QuoteRequests/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,WeddingDate,AddressId,AreaId,IdentityUserId")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,HoursRequested,DayOfWedding,DateAndTimeOfRequest,VenueStreetName,VenueCity,VenueState,VenueZip,IsRequestingPhotographer,IsRequestingPhotoBooth,IsRequestingDJ,IsRequestingOfficiant,IsRequestngWeddingStylist,CustomerId")] QuoteRequest quoteRequest)
         {
-            if (id != customer.Id)
+            if (id != quoteRequest.Id)
             {
                 return NotFound();
             }
@@ -109,12 +102,12 @@ namespace LoveWedLive_Capstone.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(quoteRequest);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.Id))
+                    if (!QuoteRequestExists(quoteRequest.Id))
                     {
                         return NotFound();
                     }
@@ -125,13 +118,11 @@ namespace LoveWedLive_Capstone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id", customer.AreaId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View(customer);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
+            return View(quoteRequest);
         }
 
-        // GET: Customers/Delete/5
+        // GET: QuoteRequests/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,33 +130,31 @@ namespace LoveWedLive_Capstone.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
-                .Include(c => c.Address)
-                .Include(c => c.Area)
-                .Include(c => c.IdentityUser)
+            var quoteRequest = await _context.QuoteRequests
+                .Include(q => q.Customer)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (quoteRequest == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(quoteRequest);
         }
 
-        // POST: Customers/Delete/5
+        // POST: QuoteRequests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            var quoteRequest = await _context.QuoteRequests.FindAsync(id);
+            _context.QuoteRequests.Remove(quoteRequest);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool QuoteRequestExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.QuoteRequests.Any(e => e.Id == id);
         }
     }
 }

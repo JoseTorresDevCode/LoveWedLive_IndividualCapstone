@@ -274,8 +274,18 @@ namespace LoveWedLive_Capstone.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PriceQuoted = table.Column<int>(nullable: false),
                     HoursRequested = table.Column<int>(nullable: false),
+                    DayOfWedding = table.Column<DateTime>(nullable: false),
+                    DateAndTimeOfRequest = table.Column<DateTime>(nullable: false),
+                    VenueStreetName = table.Column<string>(nullable: true),
+                    VenueCity = table.Column<string>(nullable: true),
+                    VenueState = table.Column<string>(nullable: true),
+                    VenueZip = table.Column<string>(nullable: true),
+                    IsRequestingPhotographer = table.Column<bool>(nullable: false),
+                    IsRequestingPhotoBooth = table.Column<bool>(nullable: false),
+                    IsRequestingDJ = table.Column<bool>(nullable: false),
+                    IsRequestingOfficiant = table.Column<bool>(nullable: false),
+                    IsRequestngWeddingStylist = table.Column<bool>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -313,17 +323,17 @@ namespace LoveWedLive_Capstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "cc220a0b-f461-4982-8657-87859f92434f", "8eb56d22-55d2-42f7-8142-a08030895f9f", "Admin", "ADMIN" });
+                values: new object[] { "9077c590-9bdc-4a52-88fb-ebe21235fad6", "77e7c96b-37f5-49d3-8df1-b014ba37a1f5", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "48b85d20-1a8e-4946-8d1c-8b3d4422f9da", "37a23992-2962-4aab-8e52-61308b38c558", "Customer", "CUSTOMER" });
+                values: new object[] { "ba68f5b6-6c0e-4631-992a-e4949cbf52cc", "a3973309-ceda-4ab4-835e-d014ce676b56", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "46b1d066-ba94-4863-a46b-c99d79f0006d", "cbc84ca0-3a56-48a1-bf45-28c39cb813c6", "Vendor", "VENDOR" });
+                values: new object[] { "c637c8e2-79c6-42da-861d-4c67f82ea97a", "c8e0da65-c824-4eeb-8b01-ef38938357cf", "Vendor", "VENDOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",
