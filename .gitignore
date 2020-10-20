@@ -9,9 +9,11 @@
 *.user
 *.userosscache
 *.sln.docstates
+*C:\Users\sgtjo\Desktop\DevCodeCamp\LoveWedLive_IndividualCapstone\LoveWedLive_Capstone\APIKeys.cs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+
 
 # Mono auto generated files
 mono_crash.*
@@ -30,6 +32,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+APIKeys.cs
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -92,6 +95,7 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+
 
 # Chutzpah Test files
 _Chutzpah*
