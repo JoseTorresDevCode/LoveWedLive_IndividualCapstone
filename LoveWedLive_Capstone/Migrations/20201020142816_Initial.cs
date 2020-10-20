@@ -305,6 +305,8 @@ namespace LoveWedLive_Capstone.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    EmailAddress = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     PriceQuote = table.Column<int>(nullable: false),
                     QuotedHours = table.Column<int>(nullable: false),
                     VendorId = table.Column<int>(nullable: false)
@@ -323,17 +325,17 @@ namespace LoveWedLive_Capstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9077c590-9bdc-4a52-88fb-ebe21235fad6", "77e7c96b-37f5-49d3-8df1-b014ba37a1f5", "Admin", "ADMIN" });
+                values: new object[] { "ff882b1b-dfcd-4510-bb5e-0c9be53f355c", "524b094c-084f-411c-a4de-cc6698ae1712", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ba68f5b6-6c0e-4631-992a-e4949cbf52cc", "a3973309-ceda-4ab4-835e-d014ce676b56", "Customer", "CUSTOMER" });
+                values: new object[] { "3443db5f-9058-4280-8d7f-82df5655d234", "cfadc31e-c5fd-4ee1-8496-db6856898274", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c637c8e2-79c6-42da-861d-4c67f82ea97a", "c8e0da65-c824-4eeb-8b01-ef38938357cf", "Vendor", "VENDOR" });
+                values: new object[] { "3b83e9ee-ed86-4981-a1b7-1cd6968b16d7", "cc8bedf6-5e2e-4a92-9902-e00742e7e67d", "Vendor", "VENDOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",

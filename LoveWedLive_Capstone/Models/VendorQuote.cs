@@ -12,6 +12,7 @@ namespace LoveWedLive_Capstone.Models
     {
         [Key]
         public int Id { get; set; }
+        
         public int PriceQuote { get; set; }
         public int QuotedHours { get; set; } 
 
