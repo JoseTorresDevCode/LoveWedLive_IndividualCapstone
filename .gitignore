@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*C:\Users\sgtjo\Desktop\DevCodeCamp\LoveWedLive_IndividualCapstone\LoveWedLive_Capstone\APIKeys.cs
+*.API
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -32,7 +32,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-APIKeys.cs
+
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
