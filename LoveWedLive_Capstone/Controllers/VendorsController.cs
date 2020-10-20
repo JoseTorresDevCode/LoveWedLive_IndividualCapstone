@@ -10,6 +10,7 @@ using LoveWedLive_Capstone.Models;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -38,23 +39,14 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Vendors/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
-            if (id == null)
             {
-                return NotFound();
+                var getVendor = _context.Vendors.Where(v => v.Id == 1).SingleOrDefault();
+                return View(getVendor);
             }
 
-            var vendor = await _context.Vendors
-                .Include(v => v.Address)
-                .Include(v => v.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (vendor == null)
-            {
-                return NotFound();
-            }
-
-            return View(vendor);
+            
         }
 
         // GET: Vendors/Create
@@ -96,21 +88,10 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Vendors/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var vendor = await _context.Vendors.FindAsync(id);
-            if (vendor == null)
-            {
-                return NotFound();
-            }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", vendor.AddressId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", vendor.IdentityUserId);
-            return View(vendor);
+            var getVendor = _context.Vendors.Where(c => c.Id == id).SingleOrDefault();
+            return View(getVendor);
         }
 
         // POST: Vendors/Edit/5
@@ -118,36 +99,16 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyName,VendorType,SubscriptionType,AddressId,IdentityUserId")] Vendor vendor)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
-            if (id != vendor.Id)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(vendor);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VendorExists(vendor.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", vendor.AddressId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", vendor.IdentityUserId);
-            return View(vendor);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Vendors/Delete/5
