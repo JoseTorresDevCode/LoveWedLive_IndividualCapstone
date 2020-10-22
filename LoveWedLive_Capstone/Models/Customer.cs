@@ -15,16 +15,13 @@ namespace LoveWedLive_Capstone.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        public string WeddingDate { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
 
         [ForeignKey("Address")]
         public int AddressId { get; set; }
         public Address Address { get; set; } 
 
-        [ForeignKey("Area")]
-        public int AreaId { get; set; }
-        public Area Area { get; set; }
        
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

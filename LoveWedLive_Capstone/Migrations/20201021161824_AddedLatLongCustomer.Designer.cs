@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoveWedLive_Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201020142816_Initial")]
-    partial class Initial
+    [Migration("20201021161824_AddedLatLongCustomer")]
+    partial class AddedLatLongCustomer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,21 +65,6 @@ namespace LoveWedLive_Capstone.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("LoveWedLive_Capstone.Models.Area", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AreaName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Areas");
-                });
-
             modelBuilder.Entity("LoveWedLive_Capstone.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -88,9 +73,6 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AreaId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -102,14 +84,15 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("WeddingDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Lat")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Long")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("AreaId");
 
                     b.HasIndex("IdentityUserId");
 
@@ -182,8 +165,14 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsPaidMember")
+                        .HasColumnType("bit");
 
                     b.Property<double>("Lat")
                         .HasColumnType("float");
@@ -191,7 +180,7 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<double>("Long")
                         .HasColumnType("float");
 
-                    b.Property<string>("SubscriptionType")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VendorType")
@@ -212,12 +201,6 @@ namespace LoveWedLive_Capstone.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PriceQuote")
                         .HasColumnType("int");
@@ -264,22 +247,22 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ff882b1b-dfcd-4510-bb5e-0c9be53f355c",
-                            ConcurrencyStamp = "524b094c-084f-411c-a4de-cc6698ae1712",
+                            Id = "1b86b34a-c02d-4f4f-ab2f-3de1662a0d1f",
+                            ConcurrencyStamp = "6c88ff79-4282-451c-8ad5-b8514baf4f48",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3443db5f-9058-4280-8d7f-82df5655d234",
-                            ConcurrencyStamp = "cfadc31e-c5fd-4ee1-8496-db6856898274",
+                            Id = "56b55865-e4d4-4edc-8705-54c83ce45343",
+                            ConcurrencyStamp = "39af0f8c-88a2-4e66-8f8d-1d2571fab2a0",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "3b83e9ee-ed86-4981-a1b7-1cd6968b16d7",
-                            ConcurrencyStamp = "cc8bedf6-5e2e-4a92-9902-e00742e7e67d",
+                            Id = "24839c9c-2919-4327-85c2-0be8a021c41b",
+                            ConcurrencyStamp = "9107f7b4-148b-4259-8244-a2e43848f550",
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });
@@ -466,12 +449,6 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("LoveWedLive_Capstone.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LoveWedLive_Capstone.Models.Area", "Area")
-                        .WithMany()
-                        .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

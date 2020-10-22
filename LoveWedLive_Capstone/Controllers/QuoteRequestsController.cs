@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LoveWedLive_Capstone.Data;
 using LoveWedLive_Capstone.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -57,15 +59,18 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,HoursRequested,DayOfWedding,DateAndTimeOfRequest,VenueStreetName,VenueCity,VenueState,VenueZip,IsRequestingPhotographer,IsRequestingPhotoBooth,IsRequestingDJ,IsRequestingOfficiant,IsRequestngWeddingStylist,CustomerId")] QuoteRequest quoteRequest)
+        public async Task<IActionResult> Create([Bind("Id,HoursRequested,DayOfWedding,DateAndTimeOfRequest,VenueStreetName,VenueCity,VenueState,VenueZip,IsRequestingPhotographer,IsRequestingPhotoBooth,IsRequestingDJ,IsRequestingOfficiant,IsRequestngWeddingStylist,CustomerId")]  QuoteRequest quoteRequest)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(quoteRequest);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var Customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+                quoteRequest.CustomerId = Customer.Id;
+                _context.Add(quoteRequest);  
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
+            
             return View(quoteRequest);
         }
 

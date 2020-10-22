@@ -4,41 +4,59 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Contact Information</h1>
 
 <div>
     <h4>Vendor</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CompanyName)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CompanyName)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.VendorType)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.VendorType)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailAddress)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailAddress)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdentityUser)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.StreetName)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdentityUser.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.StreetName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.State)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.State)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.Zipcode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.Zipcode)
         </dd>
     </dl>
 </div>

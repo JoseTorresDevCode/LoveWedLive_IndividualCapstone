@@ -19,51 +19,66 @@
                 @Html.DisplayNameFor(model => model.VendorType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SubscriptionType)
+                @Html.DisplayNameFor(model => model.EmailAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Address.StreetName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
+                @Html.DisplayNameFor(model => model.Address.City)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address.Zipcode)
+            </th>
+
             <th></th>
         </tr>
     </thead>
-
     <form asp-controller="Vendors" asp-action="Index">
         <p>
-            Vendor Search: <input type="text" name="SearchString">
+            VendorSearch: <input type="text" name="SearchString">
             <input type="submit" value="Filter" />
         </p>
     </form>
-            
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.CompanyName">  @Html.DisplayFor(modelItem => item.CompanyName)</a>
-</td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VendorType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SubscriptionType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-                </td>
-                
-            </tr>
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.CompanyName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.StreetName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address.Zipcode)
+            </td>
+
+            
+        </tr>
         }
     </tbody>
 </table>
-@*<div class="embed-responsive embed-responsive-16by9">
-<iframe class="embed-responsive-item" src="https://www.google.com/maps/embed/v1/place?zoom=16&q=@Model.Lat,@Model.Long&key=@LoveWedLive_Capstone.APIKeys.GoogleMapsKey"></iframe>
-
-</div>*@
-

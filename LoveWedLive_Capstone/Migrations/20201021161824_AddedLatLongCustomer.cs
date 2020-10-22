@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LoveWedLive_Capstone.Migrations
 {
-    public partial class Initial : Migration
+    public partial class AddedLatLongCustomer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,19 +21,6 @@ namespace LoveWedLive_Capstone.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Areas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AreaName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Areas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,9 +196,9 @@ namespace LoveWedLive_Capstone.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    WeddingDate = table.Column<string>(nullable: true),
+                    Lat = table.Column<double>(nullable: false),
+                    Long = table.Column<double>(nullable: false),
                     AddressId = table.Column<int>(nullable: false),
-                    AreaId = table.Column<int>(nullable: false),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -221,12 +208,6 @@ namespace LoveWedLive_Capstone.Migrations
                         name: "FK_Customers_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Customers_Areas_AreaId",
-                        column: x => x.AreaId,
-                        principalTable: "Areas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -245,7 +226,9 @@ namespace LoveWedLive_Capstone.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyName = table.Column<string>(nullable: true),
                     VendorType = table.Column<string>(nullable: true),
-                    SubscriptionType = table.Column<string>(nullable: true),
+                    EmailAddress = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    IsPaidMember = table.Column<bool>(nullable: false),
                     Lat = table.Column<double>(nullable: false),
                     Long = table.Column<double>(nullable: false),
                     AddressId = table.Column<int>(nullable: false),
@@ -305,8 +288,6 @@ namespace LoveWedLive_Capstone.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmailAddress = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
                     PriceQuote = table.Column<int>(nullable: false),
                     QuotedHours = table.Column<int>(nullable: false),
                     VendorId = table.Column<int>(nullable: false)
@@ -325,17 +306,17 @@ namespace LoveWedLive_Capstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ff882b1b-dfcd-4510-bb5e-0c9be53f355c", "524b094c-084f-411c-a4de-cc6698ae1712", "Admin", "ADMIN" });
+                values: new object[] { "1b86b34a-c02d-4f4f-ab2f-3de1662a0d1f", "6c88ff79-4282-451c-8ad5-b8514baf4f48", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3443db5f-9058-4280-8d7f-82df5655d234", "cfadc31e-c5fd-4ee1-8496-db6856898274", "Customer", "CUSTOMER" });
+                values: new object[] { "56b55865-e4d4-4edc-8705-54c83ce45343", "39af0f8c-88a2-4e66-8f8d-1d2571fab2a0", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3b83e9ee-ed86-4981-a1b7-1cd6968b16d7", "cc8bedf6-5e2e-4a92-9902-e00742e7e67d", "Vendor", "VENDOR" });
+                values: new object[] { "24839c9c-2919-4327-85c2-0be8a021c41b", "9107f7b4-148b-4259-8244-a2e43848f550", "Vendor", "VENDOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",
@@ -385,11 +366,6 @@ namespace LoveWedLive_Capstone.Migrations
                 name: "IX_Customers_AddressId",
                 table: "Customers",
                 column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_AreaId",
-                table: "Customers",
-                column: "AreaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdentityUserId",
@@ -451,9 +427,6 @@ namespace LoveWedLive_Capstone.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vendors");
-
-            migrationBuilder.DropTable(
-                name: "Areas");
 
             migrationBuilder.DropTable(
                 name: "Addresses");

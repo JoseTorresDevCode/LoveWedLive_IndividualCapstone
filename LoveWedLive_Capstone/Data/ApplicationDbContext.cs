@@ -15,7 +15,7 @@ namespace LoveWedLive_Capstone.Data
     {
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<Area> Areas { get; set; }
+        
         public DbSet<Customer> Customers { get; set; }
         public DbSet<QuoteRequest> QuoteRequests { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
@@ -45,8 +45,8 @@ namespace LoveWedLive_Capstone.Data
                 NormalizedName = "VENDOR"
             }
             );
-
            
+
         }
     }
 }

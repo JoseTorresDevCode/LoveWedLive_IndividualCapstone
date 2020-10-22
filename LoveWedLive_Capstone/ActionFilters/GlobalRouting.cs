@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LoveWedLive_Capstone.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -23,17 +24,18 @@ namespace LoveWedLive_Capstone.ActionFilters
                 if (_claimsPrincipal.IsInRole("Customer"))
                 {
                     context.Result = new RedirectToActionResult("Index",
-                    "Customers", null);
+                    "Vendors", null);
                 }
                 else if (_claimsPrincipal.IsInRole("Vendor"))
                 {
-                    context.Result = new RedirectToActionResult("Index",
+                    
+                    context.Result = new RedirectToActionResult("Create",
                     "Vendors", null);
                 }
                 else if (_claimsPrincipal.IsInRole("Admin"))
                 {
-                    context.Result = new RedirectToActionResult("Index",
-                    "Admins", null);
+                    context.Result = new RedirectToActionResult("Delete",
+                    "Vendors", null);
                 }
             }
         }

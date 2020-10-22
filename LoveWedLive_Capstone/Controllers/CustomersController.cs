@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LoveWedLive_Capstone.Data;
 using LoveWedLive_Capstone.Models;
+using System.Security.Claims;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -22,7 +25,7 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.Area).Include(c => c.IdentityUser);
+            var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.IdentityUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,7 +39,6 @@ namespace LoveWedLive_Capstone.Controllers
 
             var customer = await _context.Customers
                 .Include(c => c.Address)
-                .Include(c => c.Area)
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
@@ -46,31 +48,42 @@ namespace LoveWedLive_Capstone.Controllers
 
             return View(customer);
         }
-        
+
+        // GET: Customers/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id");
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
+            //ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id");
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
         // POST: Customers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,WeddingDate,AddressId,AreaId,IdentityUserId")] Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
+            string url = $"https://maps.googleapis.com/maps/api/geocode/json?address={customer.Address.StreetName},+{customer.Address.City},+{customer.Address.State},{customer.Address.Zipcode}&key={APIKeys.GeocodeKey}";
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(url);
+            string jsonResult = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                JObject geoCode = JObject.Parse(jsonResult);
+                customer.Lat = (double)geoCode["results"][0]["geometry"]["location"]["lat"];
+                customer.Long = (double)geoCode["results"][0]["geometry"]["location"]["lng"];
+            }
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
+
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id", customer.AreaId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            //ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 
@@ -87,9 +100,8 @@ namespace LoveWedLive_Capstone.Controllers
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id", customer.AreaId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            //ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 
@@ -98,7 +110,7 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,WeddingDate,AddressId,AreaId,IdentityUserId")] Customer customer)
+        public async Task<IActionResult> Edit(int id,Customer customer)
         {
             if (id != customer.Id)
             {
@@ -125,9 +137,8 @@ namespace LoveWedLive_Capstone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "Id", "Id", customer.AreaId);
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            //ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
+            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 
@@ -141,7 +152,6 @@ namespace LoveWedLive_Capstone.Controllers
 
             var customer = await _context.Customers
                 .Include(c => c.Address)
-                .Include(c => c.Area)
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
