@@ -1,25 +1,5 @@
-﻿@model Stripe.Checkout.Session
-@{
-
-    ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] = "Home";
 }
+<h1>@ViewData["Title"]</h1>
 
-<script src="https://js.stripe.com/v3/"></script>
-<br />
-<br />
-
-<button class="btn btn-info" id="btnPay">
-    Pay Now
-</button>
-<script>
-    var stripe = Stripe('pk_test_sk_test_51HbotsJGLwxagEOLsjFtu0nSwsAXA5H3i0BUBw8Q0v105uH8hAdnsjnL57NjhzesPuVugD3FrwV3evw8lQoaLn1e007HeTvTZs')
-    var element = document.getElementById('btnPay')
-    element.addEventListener('click', function () {
-         stripe.redirectToCheckout({
-         sessionId: '@Model.Id'
-         }), then(function (result){
-
-         });
-    });
-
-</script>

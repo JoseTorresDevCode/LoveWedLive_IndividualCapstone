@@ -245,22 +245,22 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1b86b34a-c02d-4f4f-ab2f-3de1662a0d1f",
-                            ConcurrencyStamp = "6c88ff79-4282-451c-8ad5-b8514baf4f48",
+                            Id = "152af0fa-0bd2-4395-ac94-cfff997bb369",
+                            ConcurrencyStamp = "fddce9de-4f44-46c0-bade-63d1ced8964e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "56b55865-e4d4-4edc-8705-54c83ce45343",
-                            ConcurrencyStamp = "39af0f8c-88a2-4e66-8f8d-1d2571fab2a0",
+                            Id = "d931cce3-4a49-47de-9bf4-849907a035e2",
+                            ConcurrencyStamp = "8f01d4c5-4f39-4b1f-901e-291acac9f70b",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "24839c9c-2919-4327-85c2-0be8a021c41b",
-                            ConcurrencyStamp = "9107f7b4-148b-4259-8244-a2e43848f550",
+                            Id = "f06a38ac-8a7d-4876-abbf-2c4cf4cb0093",
+                            ConcurrencyStamp = "9ce35677-0697-4810-b177-13e05484dda8",
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });

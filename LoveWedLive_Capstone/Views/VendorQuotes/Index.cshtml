@@ -1,0 +1,51 @@
+﻿@model IEnumerable<LoveWedLive_Capstone.Models.VendorQuote>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceQuote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuotedHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.VendorType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceQuote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuotedHours)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.Vendor.CompanyName) </a>
+</td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Vendor.VendorType)
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

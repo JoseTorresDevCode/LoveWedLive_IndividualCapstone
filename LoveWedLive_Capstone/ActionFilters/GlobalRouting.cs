@@ -26,12 +26,7 @@ namespace LoveWedLive_Capstone.ActionFilters
                     context.Result = new RedirectToActionResult("Index",
                     "Vendors", null);
                 }
-                else if (_claimsPrincipal.IsInRole("Vendor"))
-                {
-                    
-                    context.Result = new RedirectToActionResult("Create",
-                    "Vendors", null);
-                }
+               
                 else if (_claimsPrincipal.IsInRole("Admin"))
                 {
                     context.Result = new RedirectToActionResult("Delete",
