@@ -20,10 +20,34 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Admins
-        public async Task<IActionResult> Index()
+        public ActionResult AdminVendorView(string searchString)
         {
-            var applicationDbContext = _context.Admins.Include(a => a.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            var vendor = from s in _context.Vendors.Include(v => v.Address)
+                         select s;
+            
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                vendor = vendor.Where(v => v.CompanyName.Contains(searchString));
+                
+
+            } 
+            return View(vendor);  
+        }
+
+        public ActionResult AdminCustomerView(string searchString)
+        {
+            var customer = from c in _context.Customers.Include(v => v.Address)
+                         select c;
+
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                customer = customer.Where(v => v.LastName.Contains(searchString));
+
+
+            }
+            return View(customer);
         }
 
         // GET: Admins/Details/5

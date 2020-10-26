@@ -15,6 +15,7 @@ namespace LoveWedLive_Capstone.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string EmailAddress { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
 

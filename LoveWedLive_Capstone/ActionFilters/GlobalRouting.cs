@@ -31,11 +31,7 @@ namespace LoveWedLive_Capstone.ActionFilters
                     context.Result = new RedirectToActionResult("Index",
                     "Vendors", null);
                 }
-                else if (_claimsPrincipal.IsInRole("Customer"))
-                {
-                    context.Result = new RedirectToActionResult("Index",
-                    "Customers", null);
-                }
+               
             }  
         }
 

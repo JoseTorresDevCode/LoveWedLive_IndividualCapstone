@@ -30,10 +30,12 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: Vendors
         public ActionResult Index(string searchString)
         {
+            var userId2 = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var updateCustomer = _context.Customers.Where(c => c.IdentityUserId == userId2).SingleOrDefault();
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var updateVendor = _context.Vendors.Where(r => r.IdentityUserId == userId).SingleOrDefault();
 
-            if (updateVendor == null)
+            if (updateCustomer == null && updateVendor == null)
             {
                 return RedirectToAction("Create");
 

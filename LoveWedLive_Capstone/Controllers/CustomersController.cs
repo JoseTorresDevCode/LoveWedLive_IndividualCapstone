@@ -84,6 +84,7 @@ namespace LoveWedLive_Capstone.Controllers
             {
                 JObject geoCode = JObject.Parse(jsonResult);
                 customer.Lat = (double)geoCode["results"][0]["geometry"]["location"]["lat"];
+
                 customer.Long = (double)geoCode["results"][0]["geometry"]["location"]["lng"];
             }
             if (ModelState.IsValid)
