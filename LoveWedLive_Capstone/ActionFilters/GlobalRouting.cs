@@ -18,30 +18,49 @@ namespace LoveWedLive_Capstone.ActionFilters
         }
         public void OnActionExecuting(ActionExecutingContext context)
         {
-           
-        }
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
             var controller = context.RouteData.Values["controller"];
             if (controller.Equals("Home"))
             {
-                if (_claimsPrincipal.IsInRole("Customer"))
+                if (_claimsPrincipal.IsInRole("User"))
+                {
+                    context.Result = new RedirectToActionResult("Index",
+                    "User", null);
+                }
+                else if (_claimsPrincipal.IsInRole("Vendor"))
+                {
+                    context.Result = new RedirectToActionResult("Index",
+                    "Vendors", null);
+                }
+                else if (_claimsPrincipal.IsInRole("Customer"))
                 {
                     context.Result = new RedirectToActionResult("Index",
                     "Customers", null);
                 }
-                else if (_claimsPrincipal.IsInRole("Vendor"))
-                {
+            }  
+        }
 
-                    context.Result = new RedirectToActionResult("Index",
-                    "Vendors", null);
-                }
-                else if (_claimsPrincipal.IsInRole("Admin"))
-                {
-                    context.Result = new RedirectToActionResult("Index",
-                    "Admins", null);
-                }
-            }
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            //var controller = context.RouteData.Values["controller"];
+            //if (controller.Equals("Home"))
+            //{
+            //    if (_claimsPrincipal.IsInRole("Customer"))
+            //    {
+            //        context.Result = new RedirectToActionResult("Index",
+            //        "Customers", null);
+            //    }
+            //    else if (_claimsPrincipal.IsInRole("Vendor"))
+            //    {
+
+            //        context.Result = new RedirectToActionResult("Index",
+            //        "Vendors", null);
+            //    }
+            //    else if (_claimsPrincipal.IsInRole("Admin"))
+            //    {
+            //        context.Result = new RedirectToActionResult("Index",
+            //        "Admins", null);
+            //    }
+            //}
         }
     }
 }

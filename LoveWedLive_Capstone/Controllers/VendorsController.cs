@@ -31,10 +31,12 @@ namespace LoveWedLive_Capstone.Controllers
         public ActionResult Index(string searchString)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var vend = _context.Vendors.Where(c => c.VendorType == userId);
-            if (vend == null)
+            var updateVendor = _context.Vendors.Where(r => r.IdentityUserId == userId).SingleOrDefault();
+
+            if (updateVendor == null)
             {
                 return RedirectToAction("Create");
+
             }
             else
             {

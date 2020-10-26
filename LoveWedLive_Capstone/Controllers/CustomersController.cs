@@ -10,7 +10,6 @@ using LoveWedLive_Capstone.Models;
 using System.Security.Claims;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using LoveWedLive_Capstone.API;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -24,10 +23,23 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() 
+
         {
-            var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var updateCustomer = _context.Customers.Where(r => r.IdentityUserId == userId).SingleOrDefault();
+
+            if (updateCustomer == null)
+            {
+                return RedirectToAction("Create");
+
+            }
+            else
+            {
+                var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.IdentityUser);
+                return View(await applicationDbContext.ToListAsync());
+            }
+            
         }
 
         // GET: Customers/Details/5
@@ -64,7 +76,7 @@ namespace LoveWedLive_Capstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Customer customer)
         {
-            string url = $"https://maps.googleapis.com/maps/api/geocode/json?address={customer.Address.StreetName},+{customer.Address.City},+{customer.Address.State},{customer.Address.Zipcode}&key={APIKeys.GeocodeKey}";
+            string url = $"https://maps.googleapis.com/maps/api/geocode/json?address={customer.Address.StreetName},+{customer.Address.City},+{customer.Address.State},{customer.Address.Zipcode}&key={API.APIKeys.GeocodeKey}";
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             string jsonResult = await response.Content.ReadAsStringAsync();
