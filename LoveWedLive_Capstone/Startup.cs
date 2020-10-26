@@ -71,7 +71,7 @@ namespace LoveWedLive_Capstone
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

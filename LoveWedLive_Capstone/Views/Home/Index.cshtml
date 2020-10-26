@@ -1,5 +1,45 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    ViewBag.Title = "Google Map";
 }
-<h1>@ViewData["Title"]</h1>
 
+<title>@ViewBag.Title</title> 
+
+<!--<h2 style="background-color: Yellow;color: Blue; text-align: center; font-style: oblique">Satyaprakash Google Map Using Asp.net MVC</h2>
+<fieldset>
+    <legend style="font-family: Arial Black; color: blue; font-size: large;">Vendor Map</legend>
+    <div id="VendorMap" style="width: 1240px; height: 400px;">-->
+        @*set google map size .*@
+    <!--</div>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@LoveWedLive_Capstone.API.APIKeys.GoogleMapsKey"></script>--> @*api key after sign in your google account.*@
+    <!--<script type="text/javascript">
+
+        var markers = @Html.Raw(ViewBag.Markers); //all string value of column properties to viewbag.
+        window.onload = function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(markers[3].lat, markers[3].lng), //which city will be shown.
+                zoom: 9, //google map page zoom
+                mapTypeId: google.maps.MapTypeId.ROADMAP //type of view.
+            };
+            var infoWindow = new google.maps.InfoWindow();
+            var map = new google.maps.Map(document.getElementById("VendorMap"), mapOptions);//pass div id and google map load values.
+            for (i = 0; i < markers.length; i++) { //here load all city map name
+                var data = markers[i]
+                var myLatlng = new google.maps.LatLng(data.lat, data.lng); //here i assigned lat and long.
+                var marker = new google.maps.Marker({
+                    position: myLatlng, //lat and long value
+                    map: map, //div id
+                    title: data.title //city name
+                });
+                (function (marker, data) { //here city map description after click on it.
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        infoWindow.setContent(data.description); //city description value
+                        infoWindow.open(map, marker); //then pop will show  the description
+                    });
+                })(marker, data);
+            }
+        }
+    </script>
+</fieldset>
+<footer>
+    <p style="background-color: Yellow; font-weight: bold; color:blue; text-align: center; font-style: oblique">© @DateTime.Now.ToLocalTime()</p>--> @*Add Date Time*@
+<!--</footer>--> 

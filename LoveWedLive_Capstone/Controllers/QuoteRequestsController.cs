@@ -124,6 +124,7 @@ namespace LoveWedLive_Capstone.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
+            
             return View(quoteRequest);
         }
 

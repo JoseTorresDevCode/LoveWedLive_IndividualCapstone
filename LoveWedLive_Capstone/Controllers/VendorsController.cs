@@ -12,6 +12,9 @@ using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using LoveWedLive_Capstone.API;
+using System.Configuration;
+using System.Data.SqlClient;
+using Microsoft.AspNetCore.Identity;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -27,16 +30,24 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: Vendors
         public ActionResult Index(string searchString)
         {
-
-            var vendor = from s in _context.Vendors.Include(v => v.Address)
-                         select s;
-
-            if (!string.IsNullOrEmpty(searchString))
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var vend = _context.Vendors.Where(c => c.VendorType == userId);
+            if (vend == null)
             {
-                vendor = vendor.Where(v => v.Address.City.Contains(searchString));
-
+                return RedirectToAction("Create");
             }
-            return View(vendor);
+            else
+            {
+                var vendor = from s in _context.Vendors.Include(v => v.Address)
+                             select s;
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    vendor = vendor.Where(v => v.Address.City.Contains(searchString));
+
+                }
+                return View(vendor);
+            }
         }
 
         // GET: Vendors/Details/5
@@ -163,5 +174,6 @@ namespace LoveWedLive_Capstone.Controllers
         {
             return _context.Vendors.Any(e => e.Id == id);
         }
+       
     }
 }

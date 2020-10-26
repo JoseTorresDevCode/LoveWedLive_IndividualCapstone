@@ -24,7 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.Address.StreetName)
             </th>
@@ -50,35 +50,170 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.CompanyName)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VendorType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.CompanyName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.StreetName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.Zipcode)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address.StreetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address.Zipcode)
+                </td>
 
-            
-        </tr>
+
+            </tr>
         }
     </tbody>
 </table>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@LoveWedLive_Capstone.API.APIKeys.GoogleMapsKey&callback=initMap&libraries=&v=weekly"
+        defer></script>
+<style type="text/css">
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+        height: 400px;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #description {
+        font-family: 'Times New Roman';
+        font-size: 17px;
+        font-weight: 300;
+    }
+
+    #infowindow-content .title {
+        font-weight: bold;
+    }
+
+    #infowindow-content {
+        display: none;
+    }
+
+    #map #infowindow-content {
+        display: inline;
+    }
+
+    .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: 'Times New Roman';
+    }
+
+    #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+    }
+
+    .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+    }
+
+        .pac-controls label {
+            font-family: 'Times New Roman';
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+    #pac-input {
+        background-color: #fff;
+        font-family: 'Times New Roman';
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+    }
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+    #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+    }
+
+    #target {
+        width: 345px;
+    }
+</style>
+<script>
+    function initMap() {
+        var myLatLng = { lat: 43.3194, lng: -88.37889 };
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 9,
+        center: myLatLng,
+    });
+       
+        var vendors = @Html.Raw(Json.Serialize(Model));
+    if(vendors.length != 0)
+    {
+        for (let i = 0; i < vendors.length; i++) {
+            vendor = vendors[i];
+            var Latitude = vendor.lat;
+            var Longitude = vendor.long;
+            myLatLng = { lat: Latitude, lng: Longitude }
+            new google.maps.Marker({
+                position: myLatLng,
+                map,
+                title: vendor.CompanyName,
+            });
+        }
+    }
+    }
+</script>
+<body>
+    <div id="map"></div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

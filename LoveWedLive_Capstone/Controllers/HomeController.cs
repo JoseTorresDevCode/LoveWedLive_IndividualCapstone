@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LoveWedLive_Capstone.Models;
-using Stripe.BillingPortal;
-using Stripe;
-using Stripe.Checkout;
-using SessionCreateOptions = Stripe.Checkout.SessionCreateOptions;
-using SessionService = Stripe.Checkout.SessionService;
+using System.Configuration;
+using System.Data.SqlClient;
+
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -22,15 +20,37 @@ namespace LoveWedLive_Capstone.Controllers
         {
             _logger = logger;
         }
-       
-            public ActionResult Index()
+
+        public ActionResult Index()
         {
-           
-            
+            //string markers = "[";
+            //string conString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+            //SqlCommand cmd = new SqlCommand("SELECT * FROM Sp_GeoLoc");
+            //using (SqlConnection con = new SqlConnection(conString))
+            //{
+            //    cmd.Connection = con;
+            //    con.Open();
+            //    using (SqlDataReader sdr = cmd.ExecuteReader())
+            //    {
+            //        while (sdr.Read())
+            //        {
+            //            markers += "{";
+            //            markers += string.Format("'title': '{0}',", sdr["CompanyName"]);
+            //            markers += string.Format("'lat': '{0}',", sdr["Latitude"]);
+            //            markers += string.Format("'lng': '{0}',", sdr["Longitude"]);
+            //            markers += string.Format("'description': '{0}'", sdr["VendorType"]);
+            //            markers += "},";
+            //        }
+            //    }
+            //    con.Close();
+            //}
+
+            //markers += "];";
+            //ViewBag.Markers = markers;
             return View();
         }
-
-        public IActionResult Privacy()
+    
+    public IActionResult Privacy()
         {
             return View();
         }
