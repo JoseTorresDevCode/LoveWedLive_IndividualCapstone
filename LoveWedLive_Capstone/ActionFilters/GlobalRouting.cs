@@ -31,7 +31,7 @@ namespace LoveWedLive_Capstone.ActionFilters
                     context.Result = new RedirectToActionResult("Index",
                     "Vendors", null);
                 }
-               
+                
             }  
         }
 

@@ -34,7 +34,7 @@ namespace LoveWedLive_Capstone.Controllers
             var updateVendor = _context.Vendors.Where(r => r.IdentityUserId == userId).SingleOrDefault();
             var userId2 = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var updateCustomer = _context.Customers.Where(c => c.IdentityUserId == userId2).SingleOrDefault();
-            
+
 
             if (updateCustomer == null && updateVendor == null)
             {
@@ -77,7 +77,7 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Vendor vendor)
+        public async Task<IActionResult> Create(Vendor vendor)
         {
             string url = $"https://maps.googleapis.com/maps/api/geocode/json?address={vendor.Address.StreetName},+{vendor.Address.City},+{vendor.Address.State},{vendor.Address.Zipcode}&key={APIKeys.GeocodeKey}";
             HttpClient client = new HttpClient();
@@ -108,29 +108,29 @@ namespace LoveWedLive_Capstone.Controllers
             var getVendor = _context.Vendors.Where(c => c.Id == id).Include(v => v.Address).SingleOrDefault();
             return View(getVendor);
         }
-//          {
-//        if (id == null)
-//            {
-//                return NotFound();
-//    }
+        //          {
+        //        if (id == null)
+        //            {
+        //                return NotFound();
+        //    }
 
-//    var vendor = await _context.Vendors
+        //    var vendor = await _context.Vendors
 
-//        .Include(v => v.IdentityUser)
-//        .FirstOrDefaultAsync(m => m.Id == id);
+        //        .Include(v => v.IdentityUser)
+        //        .FirstOrDefaultAsync(m => m.Id == id);
 
-//            if (vendor == null)
-//            {
-//                return NotFound();
-//}
+        //            if (vendor == null)
+        //            {
+        //                return NotFound();
+        //}
 
-//return View(vendor);
-//          }
+        //return View(vendor);
+        //          }
 
         // POST: Vendors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-          [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
@@ -179,6 +179,6 @@ namespace LoveWedLive_Capstone.Controllers
         {
             return _context.Vendors.Any(e => e.Id == id);
         }
-       
+
     }
 }

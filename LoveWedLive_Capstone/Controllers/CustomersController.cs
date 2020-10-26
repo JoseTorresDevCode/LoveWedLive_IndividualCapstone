@@ -23,7 +23,7 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Customers
-        public IActionResult Index() 
+        public IActionResult Index()
 
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -39,7 +39,7 @@ namespace LoveWedLive_Capstone.Controllers
                 var customers = _context.Customers.Include(v => v.Address);
                 return View(customers);
             }
-            
+
         }
 
         // GET: Customers/Details/5
@@ -71,7 +71,7 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // POST: Customers/Create
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Customer customer)
@@ -124,7 +124,7 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Customer customer)
+        public async Task<IActionResult> Edit(int id, Customer customer)
         {
             if (id != customer.Id)
             {

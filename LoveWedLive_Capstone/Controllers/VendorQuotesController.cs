@@ -24,6 +24,7 @@ namespace LoveWedLive_Capstone.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.VendorQuotes.Include(v => v.Vendor);
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -62,99 +63,99 @@ namespace LoveWedLive_Capstone.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); 
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var Vendor = _context.Vendors.Where(c => c.IdentityUserId == userId).FirstOrDefault();
                 vendorQuote.VendorId = Vendor.Id;
                 _context.Add(vendorQuote);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           
-            return View(vendorQuote);
-        }
-
-        // GET: VendorQuotes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var vendorQuote = await _context.VendorQuotes.FindAsync(id);
-            if (vendorQuote == null)
-            {
-                return NotFound();
-            }
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "Id", "Id", vendorQuote.VendorId);
-            return View(vendorQuote);
-        }
-
-        // POST: VendorQuotes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PriceQuote,QuotedHours,VendorId")] VendorQuote vendorQuote)
-        {
-            if (id != vendorQuote.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(vendorQuote);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!VendorQuoteExists(vendorQuote.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["VendorId"] = new SelectList(_context.Vendors, "Id", "Id", vendorQuote.VendorId);
-            return View(vendorQuote);
-        }
-
-        // GET: VendorQuotes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var vendorQuote = await _context.VendorQuotes
-                .Include(v => v.Vendor)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (vendorQuote == null)
-            {
-                return NotFound();
-            }
 
             return View(vendorQuote);
         }
 
-        // POST: VendorQuotes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var vendorQuote = await _context.VendorQuotes.FindAsync(id);
-            _context.VendorQuotes.Remove(vendorQuote);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        // get: vendorquotes/edit/5
+        //public async task<iactionresult> edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return notfound();
+        //    }
+
+        //    var vendorquote = await _context.vendorquotes.findasync(id);
+        //    if (vendorquote == null)
+        //    {
+        //        return notfound();
+        //    }
+        //    viewdata["vendorid"] = new selectlist(_context.vendors, "id", "id", vendorquote.vendorid);
+        //    return view(vendorquote);
+        //}
+
+        // post: vendorquotes/edit/5
+        // to protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?linkid=317598.
+        //[httppost]
+        //[validateantiforgerytoken]
+        //public async task<iactionresult> edit(int id,vendorquote vendorquote)
+        //{
+        //    if (id != vendorquote.id)
+        //    {
+        //        return notfound();
+        //    }
+
+        //    if (modelstate.isvalid)
+        //    {
+        //        try
+        //        {
+        //            _context.update(vendorquote);
+        //            await _context.savechangesasync();
+        //        }
+        //        catch (dbupdateconcurrencyexception)
+        //        {
+        //            if (!vendorquoteexists(vendorquote.id))
+        //            {
+        //                return notfound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return redirecttoaction(nameof(index));
+        //    }
+        //    viewdata["vendorid"] = new selectlist(_context.vendors, "id", "id", vendorquote.vendorid);
+        //    return view(vendorquote);
+        //}
+
+        // get: vendorquotes/delete/5
+        //public async task<iactionresult> delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return notfound();
+        //    }
+
+        //    var vendorquote = await _context.vendorquotes
+        //        .include(v => v.vendor)
+        //        .firstordefaultasync(m => m.id == id);
+        //    if (vendorquote == null)
+        //    {
+        //        return notfound();
+        //    }
+
+        //    return view(vendorquote);
+        //}
+
+        //    // post: vendorquotes/delete/5
+        //    [httppost, actionname("delete")]
+        //    [validateantiforgerytoken]
+        //    public async task<iactionresult> deleteconfirmed(int id)
+        //    {
+        //        var vendorquote = await _context.vendorquotes.findasync(id);
+        //        _context.vendorquotes.remove(vendorquote);
+        //        await _context.savechangesasync();
+        //        return redirecttoaction(nameof(index));
+        //    }
 
         private bool VendorQuoteExists(int id)
         {

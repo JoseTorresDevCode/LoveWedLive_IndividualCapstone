@@ -29,20 +29,20 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: QuoteRequests
         public async Task<IActionResult> Index()
         {
-            
+
             //var dateTime1 = DateTime.Now.ToShortTimeString();
             //var dateTime2 = from DateAndTimeOfRequest in _context.QuoteRequests orderby DateAndTimeOfRequest select DateAndTimeOfRequest;
 
-            
-            
-            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer); 
+
+
+            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: QuoteRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null) 
+            if (id == null)
             {
                 return NotFound();
             }
@@ -70,18 +70,18 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,HoursRequested,DayOfWedding,DateAndTimeOfRequest,VenueStreetName,VenueCity,VenueState,VenueZip,IsRequestingPhotographer,IsRequestingPhotoBooth,IsRequestingDJ,IsRequestingOfficiant,IsRequestngWeddingStylist,CustomerId")]  QuoteRequest quoteRequest)
+        public async Task<IActionResult> Create([Bind("Id,HoursRequested,DayOfWedding,DateAndTimeOfRequest,VenueStreetName,VenueCity,VenueState,VenueZip,IsRequestingPhotographer,IsRequestingPhotoBooth,IsRequestingDJ,IsRequestingOfficiant,IsRequestngWeddingStylist,CustomerId")] QuoteRequest quoteRequest)
         {
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var Customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
                 quoteRequest.CustomerId = Customer.Id;
-                _context.Add(quoteRequest);  
+                _context.Add(quoteRequest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(quoteRequest);
         }
 
@@ -135,7 +135,7 @@ namespace LoveWedLive_Capstone.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
-            
+
             return View(quoteRequest);
         }
 
