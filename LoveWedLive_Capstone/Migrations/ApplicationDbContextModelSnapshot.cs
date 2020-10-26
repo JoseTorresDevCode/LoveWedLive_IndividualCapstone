@@ -73,6 +73,9 @@ namespace LoveWedLive_Capstone.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -245,22 +248,22 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7bf14617-d037-4de7-9648-eee3c53aba77",
-                            ConcurrencyStamp = "263236ca-a727-4209-a7c9-82cbcdab6438",
+                            Id = "f2a8bfce-f3d4-45ea-8fab-0a98ef8ab057",
+                            ConcurrencyStamp = "4caa5e15-69b3-47af-ba75-197634e41bfb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "4592c045-58c6-47e9-af57-5de34e296c63",
-                            ConcurrencyStamp = "63472840-e397-4f4e-b002-e633c48e6bd0",
+                            Id = "a6f6531f-a447-441d-a4c1-f10db1b6e5e7",
+                            ConcurrencyStamp = "8066cea5-900f-4e0a-9eff-8d83c42aec97",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "60ab3f96-b4f7-41cd-a8c4-4c4287544555",
-                            ConcurrencyStamp = "f38cc802-ba22-4ac9-ad06-a351455a1238",
+                            Id = "3b3e2cfe-86de-4149-8511-5d640cc95f22",
+                            ConcurrencyStamp = "f030a582-ee40-4c7a-8e8e-9645bffe19dc",
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });

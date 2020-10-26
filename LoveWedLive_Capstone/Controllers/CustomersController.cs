@@ -23,7 +23,7 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index() 
+        public IActionResult Index() 
 
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -36,8 +36,8 @@ namespace LoveWedLive_Capstone.Controllers
             }
             else
             {
-                var applicationDbContext = _context.Customers.Include(c => c.Address).Include(c => c.IdentityUser);
-                return View(await applicationDbContext.ToListAsync());
+                var customers = _context.Customers.Include(v => v.Address);
+                return View(customers);
             }
             
         }

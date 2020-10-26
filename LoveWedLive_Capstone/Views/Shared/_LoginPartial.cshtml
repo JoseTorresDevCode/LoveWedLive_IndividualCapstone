@@ -8,10 +8,16 @@
         {
             if (User.IsInRole("Admin"))
             {
-                <Ul Class="SubMenuItem">
+    <Ul Class="SubMenuItem">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin Menu
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-dark" asp-area="" asp-controller="Admins" asp-action="AdminCustomerView">Customer Overview</a>
+                <a class="dropdown-item text-dark" asp-area="" asp-controller="Admins" asp-action="AdminVendorView">Vendor Overview</a>
 
-                    
-                </Ul>
+    </Ul>
             }
             if (User.IsInRole("Customer"))
             {
@@ -35,7 +41,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item text-dark" asp-area="" asp-controller="QuoteRequests" asp-action="Index">Quote Requests</a>
-            <li> this menu item is for Admin role</li>
+            <a class="dropdown-item text-dark" asp-area="" asp-controller="VendorQuotes" asp-action="Create">Give A Quote</a>
             </Ul>
             }
 
@@ -43,19 +49,7 @@
             
 
         }
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                <a class="dropdown-item text-dark" asp-area="" asp-controller="QuoteRequests" asp-action="Create">QuickQuote</a>
-
-
-
-
-            </div>
-        </li>
+        
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>

@@ -9,6 +9,11 @@ using LoveWedLive_Capstone.Data;
 using LoveWedLive_Capstone.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.VisualBasic;
+using Stripe;
+using System.Runtime;
+using System.Globalization;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -24,14 +29,20 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: QuoteRequests
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer);
+            
+            //var dateTime1 = DateTime.Now.ToShortTimeString();
+            //var dateTime2 = from DateAndTimeOfRequest in _context.QuoteRequests orderby DateAndTimeOfRequest select DateAndTimeOfRequest;
+
+            
+            
+            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer); 
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: QuoteRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null) 
             {
                 return NotFound();
             }

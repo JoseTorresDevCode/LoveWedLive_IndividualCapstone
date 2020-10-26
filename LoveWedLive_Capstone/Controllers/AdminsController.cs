@@ -147,38 +147,69 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Admins/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> AdminDeleteCustomer(int? id) 
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var admin = await _context.Admins
-                .Include(a => a.IdentityUser)
+            var customer = await _context.Customers
+                .Include(v => v.Address)
+                .Include(v => v.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (admin == null)
+            if (customer == null)
             {
                 return NotFound();
             }
 
-            return View(admin);
+            return View(customer);
         }
 
-        // POST: Admins/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Vendors/Delete/5
+        [HttpPost, ActionName("AdminDeleteCustomer")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> AdminDeleteCustomerConfirmed(int id) 
         {
-            var admin = await _context.Admins.FindAsync(id);
-            _context.Admins.Remove(admin);
+            var customer = await _context.Customers.FindAsync(id);
+            _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool AdminExists(int id)
+            private bool AdminExists(int id)
         {
             return _context.Admins.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> AdminDeleteVendor(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vendors = await _context.Vendors
+                .Include(v => v.Address)
+                .Include(v => v.IdentityUser)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (vendors == null)
+            {
+                return NotFound();
+            }
+
+            return View(vendors);
+        }
+
+        // POST: Vendors/Delete/5
+        [HttpPost, ActionName("AdminDeleteVendor")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdminDeleteVendorsConfirmed(int id)
+        {
+            var vendor = await _context.Vendors.FindAsync(id);
+            _context.Vendors.Remove(vendor);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+       
     }
 }
