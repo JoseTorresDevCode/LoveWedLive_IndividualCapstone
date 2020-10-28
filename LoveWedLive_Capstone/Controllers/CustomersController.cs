@@ -43,23 +43,24 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Customers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var updateCustomer = _context.Customers.Where(r => r.IdentityUserId == userId).Include(a => a.Address).SingleOrDefault();
 
-            var customer = await _context.Customers
-                .Include(c => c.Address)
-                .Include(c => c.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (customer == null)
+            if (updateCustomer == null)
             {
-                return NotFound();
-            }
+                return RedirectToAction("Create");
 
-            return View(customer);
+            }
+           else
+            {
+                return View(updateCustomer);
+            }
+            
+                
+            
+           
         }
 
         // GET: Customers/Create
@@ -102,21 +103,21 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: Customers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var customer = await _context.Customers.FindAsync(id);
-            if (customer == null)
+            else
             {
-                return NotFound();
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var customers = _context.Customers.Where(r => r.IdentityUserId == userId).Include(a => a.Address).SingleOrDefault();
+                return View(customers);
             }
-            //ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Id", customer.AddressId);
-            //ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
-            return View(customer);
+
+            
+           
         }
 
         // POST: Customers/Edit/5
