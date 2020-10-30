@@ -23,8 +23,9 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: VendorQuotes
         public async Task<IActionResult> Index()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var applicationDbContext = _context.VendorQuotes.Include(v => v.Vendor);
-
+            var customerss = _context.Customers.Where(c => c.IdentityUserId == userId);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -59,12 +60,14 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PriceQuote,QuotedHours,VendorId")] VendorQuote vendorQuote)
+        public async Task<IActionResult> Create(VendorQuote vendorQuote)
         {
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var Vendor = _context.Vendors.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+                var userId2 = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var Customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault(); 
                 vendorQuote.VendorId = Vendor.Id;
                 _context.Add(vendorQuote);
                 await _context.SaveChangesAsync();

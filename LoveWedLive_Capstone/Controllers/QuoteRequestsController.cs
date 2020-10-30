@@ -14,6 +14,7 @@ using Microsoft.VisualBasic;
 using Stripe;
 using System.Runtime;
 using System.Globalization;
+using System.Numerics;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -27,16 +28,15 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: QuoteRequests
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-
-            //var dateTime1 = DateTime.Now.ToShortTimeString();
-            //var dateTime2 = from DateAndTimeOfRequest in _context.QuoteRequests orderby DateAndTimeOfRequest select DateAndTimeOfRequest;
-
-
-
-            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer);
-            return View(await applicationDbContext.ToListAsync());
+            DateTime now = DateTime.Now.AddHours(-24);
+            
+           var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var quote = _context.QuoteRequests.Where(c => c.DateAndTimeOfRequest == now).Single(); 
+            
+            
+            return View(quote);
         }
 
         // GET: QuoteRequests/Details/5
