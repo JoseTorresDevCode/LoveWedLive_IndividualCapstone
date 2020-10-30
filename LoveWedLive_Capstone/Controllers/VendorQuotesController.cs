@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LoveWedLive_Capstone.Data;
 using LoveWedLive_Capstone.Models;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -60,10 +61,12 @@ namespace LoveWedLive_Capstone.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(VendorQuote vendorQuote)
+        public async Task<IActionResult> Create(VendorQuote vendorQuote,Customer customer)
         {
+            
             if (ModelState.IsValid)
             {
+                
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var Vendor = _context.Vendors.Where(c => c.IdentityUserId == userId).FirstOrDefault();
                 var userId2 = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

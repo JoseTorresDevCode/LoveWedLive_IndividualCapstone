@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoveWedLive_Capstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201026065244_Initial")]
+    [Migration("20201030024826_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,6 +205,9 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PriceQuote")
                         .HasColumnType("int");
 
@@ -215,6 +218,8 @@ namespace LoveWedLive_Capstone.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("VendorId");
 
@@ -250,22 +255,22 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f2a8bfce-f3d4-45ea-8fab-0a98ef8ab057",
-                            ConcurrencyStamp = "4caa5e15-69b3-47af-ba75-197634e41bfb",
+                            Id = "f0f313fe-478b-456a-ac56-1144b553c7d3",
+                            ConcurrencyStamp = "3a85ce52-1b41-40e8-bb2e-e4b328469a1f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a6f6531f-a447-441d-a4c1-f10db1b6e5e7",
-                            ConcurrencyStamp = "8066cea5-900f-4e0a-9eff-8d83c42aec97",
+                            Id = "116e631a-865d-41ab-8b0a-6607cba0265d",
+                            ConcurrencyStamp = "e70e0318-c6f2-4b8c-8d9a-9d073f4959e3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "3b3e2cfe-86de-4149-8511-5d640cc95f22",
-                            ConcurrencyStamp = "f030a582-ee40-4c7a-8e8e-9645bffe19dc",
+                            Id = "d8dc8fc4-3409-4eee-844d-f4082853db5a",
+                            ConcurrencyStamp = "eff2cd28-aee6-4dba-94dc-39bb581b3268",
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });
@@ -444,7 +449,8 @@ namespace LoveWedLive_Capstone.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("LoveWedLive_Capstone.Models.Customer", b =>
@@ -452,12 +458,13 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("LoveWedLive_Capstone.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("LoveWedLive_Capstone.Models.QuoteRequest", b =>
@@ -465,7 +472,7 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("LoveWedLive_Capstone.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -474,20 +481,27 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("LoveWedLive_Capstone.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("LoveWedLive_Capstone.Models.VendorQuote", b =>
                 {
+                    b.HasOne("LoveWedLive_Capstone.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("LoveWedLive_Capstone.Models.Vendor", "Vendor")
                         .WithMany()
                         .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -496,7 +510,7 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -505,7 +519,7 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -514,7 +528,7 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -523,13 +537,13 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -538,7 +552,7 @@ namespace LoveWedLive_Capstone.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

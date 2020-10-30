@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using LoveWedLive_Capstone.Models;
-
+using System.Linq;
 
 namespace LoveWedLive_Capstone.Data
 {
@@ -46,6 +46,12 @@ namespace LoveWedLive_Capstone.Data
             }
             );
            
+            foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            base.OnModelCreating(builder);
 
         }
     }

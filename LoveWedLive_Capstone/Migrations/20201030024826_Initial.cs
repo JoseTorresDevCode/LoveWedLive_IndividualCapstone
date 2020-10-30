@@ -80,7 +80,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,7 +121,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,7 +141,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,13 +159,13 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,7 +185,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,7 +210,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Customers_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -243,7 +243,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Vendors_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -280,7 +280,7 @@ namespace LoveWedLive_Capstone.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -291,33 +291,40 @@ namespace LoveWedLive_Capstone.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PriceQuote = table.Column<int>(nullable: false),
                     QuotedHours = table.Column<int>(nullable: false),
-                    VendorId = table.Column<int>(nullable: false)
+                    VendorId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VendorQuotes", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_VendorQuotes_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_VendorQuotes_Vendors_VendorId",
                         column: x => x.VendorId,
                         principalTable: "Vendors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f2a8bfce-f3d4-45ea-8fab-0a98ef8ab057", "4caa5e15-69b3-47af-ba75-197634e41bfb", "Admin", "ADMIN" });
+                values: new object[] { "f0f313fe-478b-456a-ac56-1144b553c7d3", "3a85ce52-1b41-40e8-bb2e-e4b328469a1f", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a6f6531f-a447-441d-a4c1-f10db1b6e5e7", "8066cea5-900f-4e0a-9eff-8d83c42aec97", "Customer", "CUSTOMER" });
+                values: new object[] { "116e631a-865d-41ab-8b0a-6607cba0265d", "e70e0318-c6f2-4b8c-8d9a-9d073f4959e3", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3b3e2cfe-86de-4149-8511-5d640cc95f22", "f030a582-ee40-4c7a-8e8e-9645bffe19dc", "Vendor", "VENDOR" });
+                values: new object[] { "d8dc8fc4-3409-4eee-844d-f4082853db5a", "eff2cd28-aee6-4dba-94dc-39bb581b3268", "Vendor", "VENDOR" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_IdentityUserId",
@@ -376,6 +383,11 @@ namespace LoveWedLive_Capstone.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_QuoteRequests_CustomerId",
                 table: "QuoteRequests",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VendorQuotes_CustomerId",
+                table: "VendorQuotes",
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
