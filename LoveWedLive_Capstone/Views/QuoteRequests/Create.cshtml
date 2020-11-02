@@ -22,7 +22,11 @@
                 <input asp-for="DayOfWedding" class="form-control" />
                 <span asp-validation-for="DayOfWedding" class="text-danger"></span>
             </div>
-            
+            @*<div class="form-group">
+                <label asp-for="DateAndTimeOfRequest" class="control-label"></label>
+                <input asp-for="DateAndTimeOfRequest" class="form-control" />
+                <span asp-validation-for="DateAndTimeOfRequest" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <label asp-for="VenueStreetName" class="control-label"></label>
                 <input asp-for="VenueStreetName" class="form-control" />
@@ -68,7 +72,10 @@
                     <input class="form-check-input" asp-for="IsRequestngWeddingStylist" /> @Html.DisplayNameFor(model => model.IsRequestngWeddingStylist)
                 </label>
             </div>
-            
+            @*<div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <select asp-for="CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

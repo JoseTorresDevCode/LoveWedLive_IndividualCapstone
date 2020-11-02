@@ -8,13 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using LoveWedLive_Capstone.Data;
 using LoveWedLive_Capstone.Models;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.VisualBasic;
-using Stripe;
-using System.Runtime;
-using System.Globalization;
-using System.Numerics;
 
 namespace LoveWedLive_Capstone.Controllers
 {
@@ -28,15 +21,10 @@ namespace LoveWedLive_Capstone.Controllers
         }
 
         // GET: QuoteRequests
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            DateTime now = DateTime.Now.AddHours(-24);
-            
-           var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var quote = _context.QuoteRequests.Where(c => c.DateAndTimeOfRequest == now).Single(); 
-            
-            
-            return View(quote);
+            var applicationDbContext = _context.QuoteRequests.Include(q => q.Customer);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: QuoteRequests/Details/5
@@ -80,8 +68,9 @@ namespace LoveWedLive_Capstone.Controllers
                 _context.Add(quoteRequest);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
 
+            }
+           // ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
             return View(quoteRequest);
         }
 
@@ -135,7 +124,6 @@ namespace LoveWedLive_Capstone.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id", quoteRequest.CustomerId);
-
             return View(quoteRequest);
         }
 

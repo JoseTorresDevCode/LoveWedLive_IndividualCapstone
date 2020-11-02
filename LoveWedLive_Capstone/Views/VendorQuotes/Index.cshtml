@@ -22,7 +22,10 @@
                 @Html.DisplayNameFor(model => model.Vendor.CompanyName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Vendor.VendorType)
+                @Html.DisplayNameFor(model => model.Customer.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.LastName)
             </th>
             <th></th>
         </tr>
@@ -37,12 +40,17 @@
                 @Html.DisplayFor(modelItem => item.QuotedHours)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id"> @Html.DisplayFor(modelItem => item.Vendor.CompanyName) </a>
-</td>
-            <td>
-            @Html.DisplayFor(modelItem => item.Vendor.VendorType)
+                @Html.DisplayFor(modelItem => item.Vendor.CompanyName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Customer.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.LastName)
+            </td>
+            <td>
+                |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 
             </td>
         </tr>

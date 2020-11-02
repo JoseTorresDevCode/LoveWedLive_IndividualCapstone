@@ -21,12 +21,8 @@ namespace LoveWedLive_Capstone.ActionFilters
             var controller = context.RouteData.Values["controller"];
             if (controller.Equals("Home"))
             {
-                if (_claimsPrincipal.IsInRole("User"))
-                {
-                    context.Result = new RedirectToActionResult("Index",
-                    "User", null);
-                }
-                else if (_claimsPrincipal.IsInRole("Vendor"))
+                
+                if (_claimsPrincipal.IsInRole("Vendor"))
                 {
                     context.Result = new RedirectToActionResult("Index",
                     "Vendors", null);
