@@ -36,7 +36,7 @@ namespace LoveWedLive_Capstone.Controllers
             }
             else
             {
-                var customers = _context.Customers.Include(v => v.Address);
+                var customers = _context.Customers.Where(c => c. IdentityUserId == userId).Include(v => v.Address);
                 return View(customers);
             }
 

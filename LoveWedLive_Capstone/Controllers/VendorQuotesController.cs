@@ -23,7 +23,10 @@ namespace LoveWedLive_Capstone.Controllers
         // GET: VendorQuotes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.VendorQuotes.Include(v => v.Customer).Include(v => v.Vendor);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var updateCustomer = _context.Customers.Where(r => r.IdentityUserId == userId).SingleOrDefault();
+
+            var applicationDbContext = _context.VendorQuotes.Where(v => v.CustomerId == updateCustomer.Id).Include(v => v.Customer).Include(v => v.Vendor);
             return View(await applicationDbContext.ToListAsync());
         }
 
